@@ -64,6 +64,8 @@ async def wiki_1(message: Message):
     if not result:
         await message.answer(exceptions.wiki)
         return
-    result_info = '\n'.join(f"{number+1}) <b>{title}</b>" for number, title in enumerate(result))
+    result_info = '\n'.join(
+        f"{number+1}) <a href='https://{user.lang_wiki.ui}.wikipedia.org/?curid={result[title]}'>{title}</a>\n"
+        for number, title in enumerate(result))
     await message.answer(texts.wiki_1.format(message.text, result_info),
                          reply_markup=markups.wiki_markup(result.values()))

@@ -15,15 +15,11 @@ settings_markup.row(InlineKeyboardButton(buttons.langs_0, callback_data='lang_wi
                                          switch_inline_query_current_chat='lang translate'))
 
 
-def wiki_markup(page_ids: Iterable[int], lang: Optional[str] = 'ru') -> InlineKeyboardMarkup:
+def wiki_markup(page_ids: Iterable[int]) -> InlineKeyboardMarkup:
     markup = InlineKeyboardMarkup()
-    url = f'https://{lang}.wikipedia.org/?curid='
-    row_1, row_2 = [], []
-    for num, page_id in enumerate(page_ids):
-        row_1.append(InlineKeyboardButton(text='№'+str(num+1), callback_data=f'wiki_{page_id}'))
-        row_2.append(InlineKeyboardButton(text='№'+str(num+1), url=url+str(page_id)))
-    markup.row(*row_1)
-    markup.row(*row_2)
+    row = [InlineKeyboardButton(text='№'+str(num+1), callback_data=f'wiki_{page_id}')
+           for num, page_id in enumerate(page_ids)]
+    markup.row(row)
     return markup
 
 

@@ -10,15 +10,16 @@ import markups
 @dp.callback_query_handler(lambda call: call.data in ['en', 'de', 'ru', 'fr', 'lang_wi'])
 async def profile_1(call: CallbackQuery):
     user = db.get_user(call.from_user.id)
+    await call.answer(texts.act)
     if call.data != 'lang_wi':
         lang = db.get_language(call.data)
-        if lang != user.lang_wiki:
+        if lang == user.lang_wiki:
             user.set_lang('wiki', lang)
-            await call.message.edit_text(
-                texts.profile_1.format(user.lang_wiki.value),
-                reply_markup=user.lang_wiki_markup
-            )
-    await call.answer(texts.act)
+            return
+    await call.message.edit_text(
+        texts.profile_1.format(user.lang_wiki.value),
+        reply_markup=user.lang_wiki_markup
+    )
 
 
 @dp.callback_query_handler(lambda call: call.data == 'profile')
