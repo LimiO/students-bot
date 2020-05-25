@@ -14,8 +14,8 @@ async def profile_1(call: CallbackQuery):
     if call.data != 'lang_wi':
         lang = db.get_language(call.data)
         if lang == user.lang_wiki:
-            user.set_lang('wiki', lang)
             return
+        user.set_lang('wiki', lang)
     await call.message.edit_text(
         texts.profile_1.format(user.lang_wiki.value),
         reply_markup=user.lang_wiki_markup

@@ -58,9 +58,13 @@ async def translate_inline_0(query: InlineQuery):
             result = await translator.translate(*args, lang_to=user.lang_translate.ui)
         else:
             result = await translator.translate(*args)
-        content = texts.translate_0.format(result["lang_from"].upper(), result["lang_to"].upper(),
-                                           args[0], result["text"]) \
-            if result else exceptions.translator
+        if result:
+            lang_from = db.get_language(result["lang_from"].lower())
+            lang_to = db.get_language(result["lang_to"].lower())
+            content = texts.translate_0.format(lang_from.value, lang_to.value,
+                                               args[0], result["text"])
+        else:
+            content = exceptions.translator
         result = result["text"] if result else exceptions.translator
     item = InlineQueryResultArticle(
         id=result_id, title=result,
@@ -99,5 +103,6 @@ async def help_0(query: InlineQuery):
     result_id: str = md5((str(query.id) + str(datetime.now())).encode()).hexdigest()
     item = InlineQueryResultArticle(
         id=result_id, title=texts.help_0,
-        input_message_content=InputTextMessageContent(texts.help_1))
+        input_message_content=InputTextMessageContent(texts.help_1.format(
+            bot_name=(await bot.get_me()).username)))
     await query.answer([item])
