@@ -31,6 +31,20 @@ async def profile_2(call: CallbackQuery):
     )
 
 
+@dp.callback_query_handler(lambda call: call.data == 'ISO')
+async def faq_1(call: CallbackQuery):
+    await call.answer(texts.act)
+    await call.message.edit_text(db.Language.iso(),
+                                 reply_markup=markups.back_markup('FAQ'))
+
+
+@dp.callback_query_handler(lambda call: call.data == 'FAQ')
+async def faq_2(call: CallbackQuery):
+    await call.answer(texts.act)
+    await call.message.edit_text(
+        texts.faq_0.format(call.from_user.id),
+        reply_markup=db.Language.markup())
+
 @dp.callback_query_handler(lambda call: call.data.startswith('switch_'))
 async def profile_3(call: CallbackQuery):
     ui = call.data[call.data.rfind('_') + 1:]

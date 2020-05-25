@@ -1,11 +1,11 @@
 from typing import Optional, Union, Dict
-from pprint import pprint
 
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from peewee import Model, PrimaryKeyField, CharField, BigIntegerField
 import aiohttp
 
 from utils import Limiter
-from misc import db
+from misc import db, buttons
 
 
 class Translator(Model, Limiter):
@@ -45,6 +45,16 @@ class Language(Model):
     ui = CharField(max_length=5)
     value = CharField()
     en_value = CharField()
+
+    @classmethod
+    def markup(cls):
+        markup = InlineKeyboardMarkup()
+        markup.row(InlineKeyboardButton(text=buttons.ISO, callback_data='ISO'))
+
+    @classmethod
+    def iso(cls):
+        langs = list(cls.select())
+        return '\n'.join(f'{lang.value} - {lang.ui}' for lang in langs)
 
     class Meta:
         database = db
