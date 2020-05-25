@@ -57,11 +57,14 @@ async def wiki_inline_1(call: CallbackQuery):
     if call.inline_message_id:
         inline_message_id = call.inline_message_id
         message_id = None
+        chat_id = None
     else:
         inline_message_id = None
         message_id = call.message.message_id
+        chat_id = call.from_user.id
     await bot.edit_message_text(texts.wiki_2, message_id=message_id,
-                                inline_message_id=inline_message_id)
+                                inline_message_id=inline_message_id,
+                                chat_id=chat_id)
     info = await Wiki.get_page(page_id=page_id)
     result = ''
     for i in info:
@@ -69,4 +72,5 @@ async def wiki_inline_1(call: CallbackQuery):
             break
         result += i + '\n'
     await bot.edit_message_text(result, message_id=message_id,
-                                inline_message_id=inline_message_id)
+                                inline_message_id=inline_message_id,
+                                chat_id=chat_id)
