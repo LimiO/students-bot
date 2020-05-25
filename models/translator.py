@@ -49,17 +49,3 @@ class Language(Model):
     class Meta:
         database = db
         db_table = 'languages'
-
-
-if __name__ == '__main__':
-    import asyncio
-    loop = asyncio.get_event_loop()
-    t = Translator(token='trnsl.1.1.20200510T131914Z.5562cd2529b20983.3848a304971701d3ae8a465da1e58a2d639ca22b')
-    async def main():
-        a = {"az": "Azerbaijani", "ceb": "Cebuano", "cs": "Czech", "cy": "Welsh", "da": "Danish", "de": "German", "en": "English", "es": "Spanish", "fr": "French", "ga": "Irish", "hr": "Croatian", "ht": "Haitian", "hu": "Hungarian", "id": "Indonesian", "is": "Icelandic", "it": "Italian", "ja": "Japanese", "kn": "Kannada", "ko": "Korean", "ky": "Kyrgyz", "la": "Latin", "lb": "Luxembourgish", "lt": "Lithuanian", "lv": "Latvian", "mg": "Malagasy", "mhr": "Mari", "mn": "Mongolian", "ms": "Malay", "mt": "Maltese", "nl": "Dutch", "pap": "Papiamento", "pl": "Polish", "pt": "Portuguese", "ro": "Romanian", "ru": "Russian", "sr": "Serbian", "su": "Sundanese", "sv": "Swedish", "sw": "Swahili", "tl": "Tagalog", "tr": "Turkish", "uk": "Ukrainian", "uz": "Uzbek", "xh": "Xhosa", "yi": "Yiddish"}
-        need = {}
-        for key, value in a.items():
-            need[key] = (await t.translate(value, key, 'en'))['text']
-        pprint(need)
-
-    loop.run_until_complete(main())
