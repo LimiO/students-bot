@@ -48,7 +48,8 @@ async def faq_1(call: CallbackQuery):
 @dp.callback_query_handler(lambda call: call.data == 'inline_help')
 async def faq_2(call: CallbackQuery):
     await call.answer(texts.act)
-    await call.message.edit_text(texts.help_1, reply_markup=markups.back_markup('FAQ'))
+    await call.message.edit_text(texts.help_1.format(bot_name=(await bot.get_me()).username),
+                                 reply_markup=markups.back_markup('FAQ'))
 
 
 @dp.callback_query_handler(lambda call: call.data == 'FAQ')
@@ -56,7 +57,7 @@ async def faq_3(call: CallbackQuery):
     await call.answer(texts.act)
     await call.message.edit_text(
         texts.faq_0.format(call.from_user.id),
-        reply_markup=db.Language.markup())
+        reply_markup=markups.faq_markup)
 
 
 @dp.callback_query_handler(lambda call: call.data.startswith('switch_'))
