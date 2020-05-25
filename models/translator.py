@@ -50,6 +50,7 @@ class Language(Model):
     def markup(cls):
         markup = InlineKeyboardMarkup()
         markup.row(InlineKeyboardButton(text=buttons.ISO, callback_data='ISO'))
+        return markup
 
     @classmethod
     def iso(cls):
