@@ -31,6 +31,13 @@ async def profile_2(call: CallbackQuery):
     )
 
 
+@dp.callback_query_handler(lambda call: call.data == 'main_menu')
+async def main_menu(call: CallbackQuery):
+    user = db.get_user(call.from_user.id)
+    user.reset_state()
+    await call.message.edit_text(texts.main_menu)
+
+
 @dp.callback_query_handler(lambda call: call.data == 'ISO')
 async def faq_1(call: CallbackQuery):
     await call.answer(texts.act)

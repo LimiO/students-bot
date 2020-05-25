@@ -104,5 +104,5 @@ async def help_0(query: InlineQuery):
     item = InlineQueryResultArticle(
         id=result_id, title=texts.help_0,
         input_message_content=InputTextMessageContent(texts.help_1.format(
-            bot_name=(await bot.get_me()).username)))
+            bot_name=(await bot.get_me()).username), disable_web_page_preview=True))
     await query.answer([item])

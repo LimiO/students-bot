@@ -16,14 +16,14 @@ async def start(message: Message):
 async def wolfram_0(message: Message):
     user = db.get_user(message.from_user.id)
     user.set_state('wolfram')
-    await message.answer(texts.wolfram_0)
+    await message.answer(texts.wolfram_0, reply_markup=markups.back_markup('main_menu'))
 
 
 @dp.message_handler(lambda msg: msg.text == buttons.wiki)
 async def wiki_0(message: Message):
     user = db.get_user(message.from_user.id)
     user.set_state('wiki')
-    await message.answer(texts.wiki_0)
+    await message.answer(texts.wiki_0, reply_markup=markups.back_markup('main_menu'))
 
 
 @dp.message_handler(lambda msg: msg.text == buttons.profile)
