@@ -67,3 +67,7 @@ def set_language(**kwargs):
 if __name__ == '__main__':
     drop_table(*reversed(models))
     create_table(*models)
+    set_wolfram('PEXXAK-3GLT4V5VK6')
+    set_translator('trnsl.1.1.20200510T131914Z.5562cd2529b20983.3848a304971701d3ae8a465da1e58a2d639ca22b')
+    for i, j in own_langs.items():
+        set_language(ui=i, value=j, en_value=langs[i])

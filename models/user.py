@@ -16,7 +16,7 @@ class User(Model):
     translate_free: int = IntegerField(default=TRANSLATOR_LIM)
 
     def reduce(self, attr: str, quantity: int):
-        setattr(self, attr, getattr(self, attr+'_free') - quantity)
+        setattr(self, attr+'_free', getattr(self, attr+'_free') - quantity)
         self.save()
 
     def reset_state(self):

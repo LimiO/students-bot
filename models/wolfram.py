@@ -42,13 +42,13 @@ class Wolfram(Model, Limiter):
 
     @staticmethod
     def process_image(infile):
-        im = Image.open(infile)
-        palette = im.getpalette()
+        image = Image.open(infile)
+        palette = image.getpalette()
 
         try:
-            im.putpalette(palette)
-            new_im = Image.new("RGBA", im.size)
-            new_im.paste(im)
+            image.putpalette(palette)
+            new_im = Image.new("RGBA", image.size)
+            new_im.paste(image)
             new_im.save(f'{infile.split(".")[0]}.png')
         except EOFError:
             pass

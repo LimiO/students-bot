@@ -1,7 +1,6 @@
 from aiogram.types import Message
 
 from misc import dp, buttons, texts, exceptions
-from config import TRANSLATOR_LIM, WOLFRAM_LIM
 from utils.wikipedia import Wiki
 import db
 import markups
