@@ -2,7 +2,6 @@ from aiogram.types import CallbackQuery
 
 from misc import dp, bot, texts
 from utils.wikipedia import Wiki
-from config import TRANSLATOR_LIM, WOLFRAM_LIM
 import db
 import markups
 
@@ -40,26 +39,16 @@ async def profile_3(call: CallbackQuery):
     await call.answer(texts.act)
     if lang != user.lang_translate:
         user.set_lang('translate', lang)
-    await bot.edit_message_text(
-        user.info, inline_message_id=call.inline_message_id,
-        reply_markup=markups.settings_markup
-    )
+    await bot.edit_message_reply_markup(
+        call.from_user.id, reply_markup=None,
+        inline_message_id=call.inline_message_id)
 
 
 @dp.callback_query_handler(lambda call: call.data.startswith('wiki_'))
 async def wiki_2(call: CallbackQuery):
     page_id = int(call.data[call.data.rfind('_') + 1:])
-    info = await Wiki.get_page(page_id)
-    await call.message.delete()
-    text = ''
-    for i in info:
-        if len(text+i) > 4096:
-            await call.message.answer(text)
-            text = i
-            continue
-        text += i
-    if text:
-        await call.message.answer(text)
+    info = await Wiki.get_page(page_id, is_one=True)
+    await call.message.edit_text(info, reply_markup=markups.full_markup(page_id))
 
 
 @dp.callback_query_handler(lambda call: call.data.startswith('full_'))

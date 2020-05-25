@@ -1,4 +1,4 @@
-from typing import Iterable, Optional
+from typing import Iterable
 
 from aiogram.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -19,7 +19,7 @@ def wiki_markup(page_ids: Iterable[int]) -> InlineKeyboardMarkup:
     markup = InlineKeyboardMarkup()
     row = [InlineKeyboardButton(text='№'+str(num+1), callback_data=f'wiki_{page_id}')
            for num, page_id in enumerate(page_ids)]
-    markup.row(row)
+    markup.row(*row)
     return markup
 
 

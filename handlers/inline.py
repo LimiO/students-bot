@@ -47,7 +47,7 @@ async def translate_inline_0(query: InlineQuery):
     text = query.query[:-2].strip().lower()
     user = db.get_user(query.from_user.id)
     result_id: str = md5((text + str(query.id)).encode()).hexdigest()
-    if user.translate_free < len(text):
+    if user.translate_free < len(text) or len(text) > 1900:
         result = content = exceptions.limit
     else:
         args = Parser.get_translation_args(text)
