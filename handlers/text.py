@@ -38,7 +38,7 @@ async def profile_0(message: Message):
 @dp.message_handler(lambda msg: msg.text == buttons.FAQ)
 async def faq_0(message: Message):
     await message.answer(texts.faq_0.format(message.from_user.id),
-                         reply_markup=db.Language.markup())
+                         reply_markup=markups.faq_markup)
 
 
 @dp.message_handler(lambda msg: db.get_user(msg.from_user.id).state == 'wolfram')

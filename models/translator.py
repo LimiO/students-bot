@@ -47,12 +47,6 @@ class Language(Model):
     en_value = CharField()
 
     @classmethod
-    def markup(cls):
-        markup = InlineKeyboardMarkup()
-        markup.row(InlineKeyboardButton(text=buttons.ISO, callback_data='ISO'))
-        return markup
-
-    @classmethod
     def iso(cls):
         langs = list(cls.select())
         return '\n'.join(f'{lang.value} - {lang.ui}' for lang in langs)

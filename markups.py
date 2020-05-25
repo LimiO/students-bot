@@ -14,6 +14,10 @@ settings_markup.row(InlineKeyboardButton(buttons.langs_0, callback_data='lang_wi
                     InlineKeyboardButton(buttons.langs_1,
                                          switch_inline_query_current_chat='lang translate'))
 
+faq_markup = InlineKeyboardMarkup()
+faq_markup.row(InlineKeyboardButton(text=buttons.ISO, callback_data='ISO'),
+               InlineKeyboardButton(text=buttons.help, callback_data='inline_help'))
+
 
 def wiki_markup(page_ids: Iterable[int]) -> InlineKeyboardMarkup:
     markup = InlineKeyboardMarkup()

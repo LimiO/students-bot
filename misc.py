@@ -4,7 +4,7 @@ from playhouse.postgres_ext import PostgresqlExtDatabase
 from aiogram import Bot, Dispatcher
 import yaml
 
-from config import TOKEN, DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, PROXY_URL, PROXY_AUTH
+from config import TOKEN, DB_NAME, DB_USER, DB_PASSWORD, DB_HOST
 
 
 bot: Bot = Bot(TOKEN, parse_mode='html')
