@@ -53,12 +53,20 @@ async def wiki_2(call: CallbackQuery):
 
 @dp.callback_query_handler(lambda call: call.data.startswith('full_'))
 async def wiki_inline_1(call: CallbackQuery):
-    await bot.edit_message_text(texts.wiki_2, inline_message_id=call.inline_message_id)
     page_id = int(call.data[call.data.rfind('_') + 1:])
+    if call.inline_message_id:
+        inline_message_id = call.inline_message_id
+        message_id = None
+    else:
+        inline_message_id = None
+        message_id = call.message.message_id
+    await bot.edit_message_text(texts.wiki_2, message_id=message_id,
+                                inline_message_id=inline_message_id)
     info = await Wiki.get_page(page_id=page_id)
     result = ''
     for i in info:
         if len(result + i) > 4096:
             break
         result += i + '\n'
-    await bot.edit_message_text(result, inline_message_id=call.inline_message_id)
+    await bot.edit_message_text(result, message_id=message_id,
+                                inline_message_id=inline_message_id)
