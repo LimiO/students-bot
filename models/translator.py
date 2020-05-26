@@ -1,6 +1,5 @@
 from typing import Optional, Union, Dict
 
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from peewee import Model, PrimaryKeyField, CharField, BigIntegerField
 import aiohttp
 

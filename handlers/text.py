@@ -68,7 +68,7 @@ async def wiki_1(message: Message):
     user.reset_state()
     result = await Wiki.search(message.text, user.lang_wiki.ui)
     if not result:
-        await message.answer(exceptions.wiki)
+        await message.answer(exceptions.wiki_0)
         return
     result_info = '\n'.join(
         f"{number+1}) <a href='https://{user.lang_wiki.ui}.wikipedia.org/?curid={result[title]}'>{title}</a>\n"

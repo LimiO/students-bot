@@ -1,6 +1,6 @@
 from aiogram.types import CallbackQuery
 
-from misc import dp, bot, texts
+from misc import dp, bot, texts, exceptions
 from config import CREATOR
 from utils.wikipedia import Wiki
 import db
@@ -70,19 +70,25 @@ async def profile_3(call: CallbackQuery):
     if lang != user.lang_translate:
         user.set_lang('translate', lang)
     await bot.edit_message_reply_markup(
-        call.from_user.id, reply_markup=None,
-        inline_message_id=call.inline_message_id)
+        reply_markup=None, inline_message_id=call.inline_message_id
+    )
 
 
 @dp.callback_query_handler(lambda call: call.data.startswith('wiki_'))
 async def wiki_2(call: CallbackQuery):
+    await call.answer(texts.act)
+    user = db.get_user(call.from_user.id)
     page_id = int(call.data[call.data.rfind('_') + 1:])
-    info = await Wiki.get_page(page_id, is_one=True)
-    await call.message.edit_text(info, reply_markup=markups.full_markup(page_id))
+    info = await Wiki.get_page(page_id, user.lang_wiki.ui, is_one=True)
+    if info:
+        await call.message.edit_text(info, reply_markup=markups.full_markup(page_id))
+        return
+    await call.message.edit_text(exceptions.wiki_1)
 
 
 @dp.callback_query_handler(lambda call: call.data.startswith('full_'))
 async def wiki_inline_1(call: CallbackQuery):
+    user = db.get_user(call.from_user.id)
     page_id = int(call.data[call.data.rfind('_') + 1:])
     if call.inline_message_id:
         inline_message_id = call.inline_message_id
@@ -95,7 +101,7 @@ async def wiki_inline_1(call: CallbackQuery):
     await bot.edit_message_text(texts.wiki_2, message_id=message_id,
                                 inline_message_id=inline_message_id,
                                 chat_id=chat_id)
-    info = await Wiki.get_page(page_id=page_id)
+    info = await Wiki.get_page(page_id, user.lang_wiki.ui)
     result = ''
     for i in info:
         if len(result + i) > 4096:
