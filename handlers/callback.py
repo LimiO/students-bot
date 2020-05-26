@@ -1,6 +1,7 @@
 from aiogram.types import CallbackQuery
 
 from misc import dp, bot, texts
+from config import CREATOR
 from utils.wikipedia import Wiki
 import db
 import markups
@@ -56,7 +57,7 @@ async def faq_2(call: CallbackQuery):
 async def faq_3(call: CallbackQuery):
     await call.answer(texts.act)
     await call.message.edit_text(
-        texts.faq_0.format(call.from_user.id),
+        texts.faq_0.format(CREATOR),
         reply_markup=markups.faq_markup)
 
 

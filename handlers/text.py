@@ -66,7 +66,7 @@ async def wolfram_1(message: Message):
 async def wiki_1(message: Message):
     user = db.get_user(message.from_user.id)
     user.reset_state()
-    result = await Wiki.search(message.text)
+    result = await Wiki.search(message.text, user.lang_wiki.ui)
     if not result:
         await message.answer(exceptions.wiki)
         return

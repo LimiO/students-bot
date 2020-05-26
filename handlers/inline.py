@@ -29,8 +29,9 @@ async def inline_lang_0(query: InlineQuery):
 
 @dp.inline_handler(lambda query: query.query.strip().lower()[-3:] == '-wi')  #
 async def wiki_inline_0(query: InlineQuery):
+    user = db.get_user(query.from_user.id)
     text = query.query[:-3].strip().lower()
-    search: dict = await Wiki.search(text)
+    search: dict = await Wiki.search(text, user.lang_wiki.ui)
     items = list()
     if search:
         for title, page_id in search.items():
