@@ -4,7 +4,7 @@ from peewee import Model, PrimaryKeyField, CharField, BigIntegerField
 import aiohttp
 
 from utils import Limiter
-from misc import db, buttons
+from misc import db
 
 
 class Translator(Model, Limiter):
