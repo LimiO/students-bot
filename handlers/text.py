@@ -20,7 +20,8 @@ async def help_(message: Message):
 
 @dp.message_handler(commands=['inline'])
 async def inline_help(message: Message):
-    await message.answer(texts.help_1.format((await bot.get_me()).username),
+    await message.answer(texts.help_1.format(
+        bot_name=(await bot.get_me()).username),
                          disable_web_page_preview=True)
 
 
