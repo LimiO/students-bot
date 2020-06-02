@@ -79,7 +79,7 @@ async def wiki_2(call: CallbackQuery):
     await call.answer(texts.act)
     user = db.get_user(call.from_user.id)
     page_id = int(call.data[call.data.rfind('_') + 1:])
-    info = await Wiki.get_page(page_id, user.lang_wiki.ui, is_one=True)
+    info = await Wiki.get_page(page_id, user.lang_wiki.ui, True)
     if info:
         await call.message.edit_text(info, reply_markup=markups.full_markup(page_id))
         return

@@ -17,7 +17,7 @@ class Wiki:
         async with aiohttp.ClientSession() as session:
             async with session.get(url, params=params) as request:
                 json = (await request.json())
-                if 'error' in json:
+                if 'error' not in json:
                     soup = BeautifulSoup(json["parse"]["text"]["*"], 'lxml')
                     els = soup.find_all('p')
                     if is_one:

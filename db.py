@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Union, Optional, List
 
 from misc import db, own_langs, langs
 from models import models, User, Wolfram, Translator, Language
@@ -32,6 +32,11 @@ def get_user(user_id: int) -> Union[User, None]:
         lang = get_language(ui='en')
         User.create(id=user_id, lang_translate=lang, lang_wiki=lang)
     return User.get_or_none(id=user_id)
+
+
+@connection
+def get_users() -> List[User]:
+    return list(User.select())
 
 
 @connection

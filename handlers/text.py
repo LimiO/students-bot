@@ -1,6 +1,7 @@
 from aiogram.types import Message
 
 from misc import dp, buttons, texts, exceptions
+from config import CREATOR
 from utils.wikipedia import Wiki
 import db
 import markups
@@ -37,7 +38,7 @@ async def profile_0(message: Message):
 
 @dp.message_handler(lambda msg: msg.text == buttons.FAQ)
 async def faq_0(message: Message):
-    await message.answer(texts.faq_0.format(message.from_user.id),
+    await message.answer(texts.faq_0.format(CREATOR),
                          reply_markup=markups.faq_markup)
 
 
