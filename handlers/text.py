@@ -1,6 +1,6 @@
 from aiogram.types import Message
 
-from misc import dp, buttons, texts, exceptions
+from misc import dp, buttons, texts, exceptions, bot
 from config import CREATOR
 from utils.wikipedia import Wiki
 import db
@@ -20,7 +20,8 @@ async def help_(message: Message):
 
 @dp.message_handler(commands=['inline'])
 async def inline_help(message: Message):
-    await message.answer(texts.help_1, disable_web_page_preview=True)
+    await message.answer(texts.help_1.format((await bot.get_me()).username),
+                         disable_web_page_preview=True)
 
 
 @dp.message_handler(lambda msg: msg.text == buttons.wolfram)
