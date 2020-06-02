@@ -7,7 +7,8 @@ from misc import buttons
 
 main_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 main_markup.row(buttons.wolfram, buttons.wiki)
-main_markup.row(buttons.profile, buttons.FAQ)
+main_markup.row(buttons.profile)
+main_markup.row(buttons.FAQ)
 
 settings_markup = InlineKeyboardMarkup()
 settings_markup.row(InlineKeyboardButton(buttons.langs_0, callback_data='lang_wi'),
