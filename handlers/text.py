@@ -15,12 +15,12 @@ async def start(message: Message):
 
 @dp.message_handler(commands=['help'])
 async def help_(message: Message):
-    await message.answer(texts.help_1)
+    await message.answer(texts.help_2, disable_web_page_preview=True)
 
 
 @dp.message_handler(commands=['inline'])
 async def inline_help(message: Message):
-    await message.answer(texts.help_1)
+    await message.answer(texts.help_1, disable_web_page_preview=True)
 
 
 @dp.message_handler(lambda msg: msg.text == buttons.wolfram)
