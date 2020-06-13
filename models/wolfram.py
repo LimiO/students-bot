@@ -61,10 +61,3 @@ class Wolfram(Model, Limiter):
     class Meta:
         database = db
         db_table = 'wolfram'
-
-
-if __name__ == '__main__':
-    wolfram = Wolfram(app_id='PEXXAK-3GLT4V5VK6')
-    wolfram.process_image('None_2000.gif')
-    # loop = asyncio.get_event_loop()
-    # loop.run_until_complete(wolfram.check_request('1+2'))
