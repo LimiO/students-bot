@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Union, Optional, List
 
 from misc import db, own_langs, langs
 from models import models, User, Wolfram, Translator, Language
@@ -35,6 +35,11 @@ def get_user(user_id: int) -> Union[User, None]:
 
 
 @connection
+def get_users() -> List[User]:
+    return list(User.select())
+
+
+@connection
 def get_language(ui: str) -> Union[Language, None]:
     return Language.get_or_none(ui=ui)
 
@@ -62,12 +67,3 @@ def set_translator(token: str, limit: Optional[int] = 1000000):
 @connection
 def set_language(**kwargs):
     Language.create(**kwargs)
-
-
-if __name__ == '__main__':
-    drop_table(*reversed(models))
-    create_table(*models)
-    set_wolfram('PEXXAK-3GLT4V5VK6')
-    set_translator('trnsl.1.1.20200510T131914Z.5562cd2529b20983.3848a304971701d3ae8a465da1e58a2d639ca22b')
-    for i, j in own_langs.items():
-        set_language(ui=i, value=j, en_value=langs[i])

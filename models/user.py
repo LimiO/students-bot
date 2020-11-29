@@ -3,7 +3,8 @@ from peewee import Model, CharField, PrimaryKeyField, ForeignKeyField, IntegerFi
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from misc import db, own_langs, buttons, texts
-from config import WOLFRAM_LIM, TRANSLATOR_LIM
+from config import WOLFRAM_LIM, TRANSLATE_LIM
+import config
 from .translator import Language
 
 
@@ -13,7 +14,7 @@ class User(Model):
     lang_translate: Language = ForeignKeyField(Language)
     lang_wiki: Language = ForeignKeyField(Language)
     wolfram_free: int = IntegerField(default=WOLFRAM_LIM)
-    translate_free: int = IntegerField(default=TRANSLATOR_LIM)
+    translate_free: int = IntegerField(default=TRANSLATE_LIM)
 
     def reduce(self, attr: str, quantity: int):
         setattr(self, attr+'_free', getattr(self, attr+'_free') - quantity)
@@ -60,7 +61,13 @@ class User(Model):
     @property
     def info(self):
         return texts.profile_0.format(
-            user=self, wolfram_lim=WOLFRAM_LIM, tranlator_lim=TRANSLATOR_LIM)
+            user=self, wolfram_lim=WOLFRAM_LIM, tranlator_lim=TRANSLATE_LIM)
+
+    def reset_limits(self):
+        limits = ['wolfram', 'translate']
+        for lim in limits:
+            setattr(self, lim+'_free', getattr(config, lim.upper()+'_LIM'))
+        self.save()
 
     class Meta:
         database = db
