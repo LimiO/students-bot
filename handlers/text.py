@@ -10,7 +10,8 @@ import markups
 @dp.message_handler(commands=['start'])
 async def start(message: Message):
     db.get_user(message.from_user.id)
-    await message.answer(texts.start.format(message.from_user.first_name), reply_markup=markups.main_markup)
+    await message.answer(texts.start.format(message.from_user.first_name),
+                         reply_markup=markups.main_markup)
 
 
 @dp.message_handler(lambda msg: msg.text == buttons.wolfram)

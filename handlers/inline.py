@@ -3,7 +3,7 @@ from datetime import datetime
 
 from aiogram.types import InlineQuery, InputTextMessageContent
 from aiogram.types.inline_query_result import InlineQueryResultArticle, \
-    InlineQueryResultCachedPhoto
+    InlineQueryResultCachedPhoto, InlineQueryResultCachedDocument
 
 from misc import dp, buttons, texts, exceptions, bot, langs, own_langs
 from config import PICS
@@ -90,8 +90,8 @@ async def main(query: InlineQuery):
             with open(f'{wolfram.id}_{wolfram.limit}.png', 'rb') as file:
                 msg = await bot.send_photo(PICS, file)
             wolfram.delete_photos()
-            item = InlineQueryResultCachedPhoto(
-                id=result_id, photo_file_id=msg.photo[-1].file_id)
+            item = InlineQueryResultCachedDocument(
+                id=result_id, document_file_id=msg.photo[-1].file_id, title=query.query)
         else:
             item = InlineQueryResultArticle(
                 id=result_id, title=exceptions.wolfram,
