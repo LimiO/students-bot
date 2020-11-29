@@ -88,7 +88,7 @@ async def main(query: InlineQuery):
         wolfram.reduce(1)
         if await wolfram.check_request(text):
             with open(f'{wolfram.id}_{wolfram.limit}.png', 'rb') as file:
-                msg = await bot.send_photo(PICS, file)
+                msg = await bot.send_document(PICS, file)
             wolfram.delete_photos()
             item = InlineQueryResultCachedDocument(
                 id=result_id, document_file_id=msg.photo[-1].file_id, title=query.query)
